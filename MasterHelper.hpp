@@ -6,11 +6,11 @@
 class MasterHelper
 {
 public:
-	MasterHelper(std::string msg, int msgId);
-	~MasterHelper();
+    MasterHelper(std::string msg, int msgId);
+    ~MasterHelper();
 
-	bool process(cfMsg cfmsg);
+    bool process(cfMsg cfmsg);
 private:
-	int msqid_;
+    int msqid_;
 
 };

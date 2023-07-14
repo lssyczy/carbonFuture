@@ -20,17 +20,17 @@ MasterHelper::~MasterHelper()
 
 bool MasterHelper::process(cfMsg cfmsg)
 {
-	Message message;
+    Message message;
     message.mtype = 1;
     std::strcpy(message.mtext, cfMsgToStr[cfmsg].data());
 
-	msgsnd(msqid_, &message, sizeof(message.mtext), 0);
+    msgsnd(msqid_, &message, sizeof(message.mtext), 0);
     std::cout << "MasterProcessWoker: " << message.mtext <<" sent, prepare to receiving..."<< std::endl;
 
     msgrcv(msqid_, &message, sizeof(message.mtext), 1, 0);
     std::cout << "MasterProcessWoker: " << message.mtext << " received, done."<< std::endl;
-    
+
     msgctl(msqid_, IPC_RMID, NULL);
-    
+
     return true;
 }
