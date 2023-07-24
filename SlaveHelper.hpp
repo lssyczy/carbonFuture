@@ -2,6 +2,7 @@
 
 #include "include/Messages.hpp"
 #include "commonHelper.hpp"
+#include "database/DatabaseServer.hpp"
 
 class SlaveHelper
 {
@@ -10,7 +11,9 @@ public:
     ~SlaveHelper();
 
     bool process(cfMsg cfmsg);
+    void generateDummyData(unsigned int testLoop);
 private:
     int msqid_;
+
 
 };

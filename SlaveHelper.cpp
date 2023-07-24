@@ -39,3 +39,23 @@ bool SlaveHelper::process(cfMsg cfmsg)
     
     return true;
 }
+
+void SlaveHelper::generateDummyData(unsigned int testLoop)
+{
+    /*Generate dummy data table*/
+    carbonElemental ce;
+    std::default_random_engine engine;
+    for (unsigned int i = 0; i < testLoop ; i++)
+    {
+        stringstream stream;
+        stream << i;
+        string i_new;
+        stream >> i_new;
+        ce.Name = "DummyData" + i_new;
+        rand();
+        double randoxNumber = engine();
+        ce.Data = randoxNumber;
+        DatabaseServer::getInstance()->insertElemental(ce);
+        cout<<"counter: "<<i<<endl;
+        }
+}

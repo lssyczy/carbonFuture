@@ -3,6 +3,12 @@
 #include <mysql/mysql.h>
 #include <iostream>
 
+//test purpose files
+#include <sstream>
+#include<stdlib.h> 
+#include<time.h> 
+#include <random>
+
 using namespace std;
 
 //placeholder: this part should be clarified later
@@ -24,9 +30,9 @@ public:
     }
 
     bool insertElemental(const carbonElemental ce);
-    bool deleteElemental(/*const carbonElemental ce*/);
+    bool deleteElemental(const carbonElemental ce);
     bool updateElemental(/*const carbonElemental ce*/);
-    vector<carbonElemental> getElementals(const carbonElemental ce);
+    carbonElemental getElementals(carbonElemental& ce);
 
 private:
     const char* host = "192.168.50.85";
