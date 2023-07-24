@@ -7,8 +7,8 @@ using namespace std;
 
 //placeholder: this part should be clarified later
 typedef struct carbonElemental {
-    string name;
-    float data;
+    string Name;
+    long double Data;
 } carbonElemental;
 
 class DatabaseServer
@@ -23,7 +23,7 @@ public:
         return &DatabaseServer;
     }
 
-    bool insertElemental(/*const carbonElemental ce*/);
+    bool insertElemental(const carbonElemental ce);
     bool deleteElemental(/*const carbonElemental ce*/);
     bool updateElemental(/*const carbonElemental ce*/);
     vector<carbonElemental> getElementals(const carbonElemental ce);

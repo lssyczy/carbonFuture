@@ -21,10 +21,20 @@ DatabaseServer::~DatabaseServer()
     mysql_close(con);
 }
 
-bool DatabaseServer::insertElemental(/*const carbonElemental ce*/)
+bool DatabaseServer::insertElemental(const carbonElemental ce)
 {
-    //TO BE IMPLEMENTATION
-    return 1;
+    auto name = ce.Name;
+    auto data = ce.Data;
+
+    char sql[1024];
+    sprintf(sql, "INSERT INTO source VALUES (null,\'%s\',%.15lf)", name.c_str(), data);
+
+    if (mysql_query(con,sql))
+    {
+        cout << "Failed to insert data, Error: " << mysql_error(con) << endl;
+        return false;
+    }
+    return true;
 }
 
 bool DatabaseServer::deleteElemental(/*const carbonElemental ce*/)

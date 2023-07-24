@@ -8,8 +8,10 @@ int main() {
     if (slavehelper.process(cfMsg::Resp))
     {
         cout << "Msg resp done, setup the database" << endl;
-
-        if (DatabaseServer::getInstance()->insertElemental() && DatabaseServer::getInstance()->deleteElemental() && DatabaseServer::getInstance()->updateElemental())
+        carbonElemental ce;
+        ce.Name = "testCpp";
+        ce.Data = 1.234567890234567890234567890234567890;
+        if (DatabaseServer::getInstance()->insertElemental(ce));
             cout <<"test behavior done" << endl;
     }
     return 0;

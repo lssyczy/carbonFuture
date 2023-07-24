@@ -1,3 +1,3 @@
 gcc ./MasterHelper.cpp ./master.cpp ./commonHelper.cpp -lstdc++ -o ./output/master.out
 
-cc ./SlaveHelper.cpp ./slave.cpp ./commonHelper.cpp ./database/DatabaseServer.cpp -lstdc++ -lmysqlclient -o ./output/slave.out
+gcc ./SlaveHelper.cpp ./slave.cpp ./commonHelper.cpp ./database/DatabaseServer.cpp -lstdc++ -lmysqlclient -o ./output/slave.out
