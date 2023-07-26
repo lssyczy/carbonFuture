@@ -58,13 +58,12 @@ bool DatabaseServer::updateElemental(/*const carbonElemental ce*/)
     return 1;
 }
 
-carbonElemental DatabaseServer::getElementals(carbonElemental& ce)
+vector<carbonElemental> DatabaseServer::getElementals(vector<string> nameVec)
 {
-    auto name = ce.Name;
-
     char sql[1024];
-    sprintf(sql, "select Data from source where Name = \'%s\';", name.c_str());
+    auto sqlCmd = buildSql(nameVec);
 
+    sprintf(sql, "%s", sqlCmd.c_str());
     if (mysql_query(con,sql))
     {
         cout << "Failed to get data, Error: " << mysql_error(con) << endl;
@@ -73,9 +72,37 @@ carbonElemental DatabaseServer::getElementals(carbonElemental& ce)
 
     MYSQL_RES* res = mysql_store_result(con);
     MYSQL_ROW row;
-    while(row == mysql_fetch_row(res))
+    while((row = mysql_fetch_row(res)))
     {
-        ce.Data = atoi(row[0]);
+        carbonElemental ce;
+        ce.Index = atoi(row[0]);
+        ce.Name = row[1];
+        ce.Data = atof(row[2]);
+        ce.Year = atoi(row[3]);
+        ce.Region = row[4];
+        ceVec.emplace_back(ce);
     }
-    return ce;
+    return ceVec;
+}
+
+string DatabaseServer::buildSql(vector<string> nameVec)
+{
+    string sqlCmdHeader = "select * from source where ";
+    string sqlCmdTmp = "";
+    string sqlCmd = "";
+    auto iter = nameVec.begin();
+
+    for (auto& name: nameVec)
+    {
+        sqlCmdTmp = sqlCmdHeader + "Name = '" + name.c_str() + "'";
+        if(iter != nameVec.end() - 1)
+            sqlCmd += sqlCmdTmp + " OR ";
+        else
+            sqlCmd += sqlCmdTmp + ";";
+        sqlCmdTmp = "";
+        sqlCmdHeader = "";
+        iter++;
+    }
+    cout << "sqlCmd: " << sqlCmd << endl;
+    return sqlCmd;
 }

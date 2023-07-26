@@ -29,7 +29,6 @@ bool SlaveHelper::process(cfMsg cfmsg)
 
     message.mtype = 1;
     std::strcpy(message.mtext, cfMsgToStr[cfmsg].data());
-    std::this_thread::sleep_for(std::chrono::seconds(2));
 
     msgsnd(msqid_, &message, sizeof(message.mtext), 0);
     
