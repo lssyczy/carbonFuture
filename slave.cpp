@@ -8,7 +8,7 @@ int main() {
     uint64_t startTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
     SlaveHelper slavehelper("CF_message", 1);
     
-    if (slavehelper.process(cfMsg::Resp))
+    if (slavehelper.process())
     {
         vector<string> name = {"DummyData129999","DummyData129998","DummyData998","DummyData129995","DummyData129928","DummyData119998","DummyData998"};
         cout << "Msg resp done, setup the database" << endl;

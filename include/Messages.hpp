@@ -1,13 +1,22 @@
 #pragma once
 
+#include <map>
+#include <cstring>
+
 struct Message {
     long mtype; 
     char mtext[1024];
 };
 
-enum CarbonFeatureMessage {
+typedef enum CarbonFeatureMessage {
 	Req = 0,
-	Resp
-};
+	Resp,
+    Search,
+    SearchResp
+}CarbonFeatureMessage;
 
-typedef CarbonFeatureMessage cfMsg;
+static std::map<CarbonFeatureMessage, std::string> cfMsgToStr =
+    {{CarbonFeatureMessage::Req, "Req"},
+     {CarbonFeatureMessage::Resp, "Resp"},
+     {CarbonFeatureMessage::Search, "Search"},
+     {CarbonFeatureMessage::SearchResp, "SearchResp"}};

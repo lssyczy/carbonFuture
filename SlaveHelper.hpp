@@ -10,7 +10,7 @@ public:
     SlaveHelper(std::string msg, int msgId);
     ~SlaveHelper();
 
-    bool process(cfMsg cfmsg);
+    bool process();
     void generateDummyData(unsigned int testLoop);
 private:
     int msqid_;

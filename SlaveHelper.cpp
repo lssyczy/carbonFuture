@@ -1,14 +1,10 @@
 #include "SlaveHelper.hpp"
 #include "commonHelper.hpp"
+#include "include/Messages.hpp"
 
 #include <map>
 #include <chrono>
 #include <thread>
-
-std::map <cfMsg, std::string> cfMsgToStr = 
-{{CarbonFeatureMessage::Req, "Message::Req"},
-{CarbonFeatureMessage::Resp, "Message::Resp"}};
-
 
 SlaveHelper::SlaveHelper(std::string msg, int msgId)
 {
@@ -20,15 +16,17 @@ SlaveHelper::~SlaveHelper()
 {
 }
 
-bool SlaveHelper::process(cfMsg cfmsg)
+bool SlaveHelper::process()
 {
     Message message;
     msgrcv(msqid_, &message, sizeof(message.mtext), 1, 0);
 
+    //if (message.mtext == )
+
     std::cout << "SlaveProcessWorker: " << message.mtext << std::endl;
 
     message.mtype = 1;
-    std::strcpy(message.mtext, cfMsgToStr[cfmsg].data());
+    std::strcpy(message.mtext, cfMsgToStr[CarbonFeatureMessage::SearchResp].data());
 
     msgsnd(msqid_, &message, sizeof(message.mtext), 0);
     
