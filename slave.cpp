@@ -7,8 +7,13 @@ int main() {
 
     uint64_t startTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
     SlaveHelper slavehelper("CF_message", 1);
+    std::string materialStr = "";
+    std::string comStr = "";;
+
+    slavehelper.cementMessageReceiver(materialStr,comStr);
+    cout << "slave_main: materialStr: " <<materialStr<< "; comStr: "<< comStr << endl;
     
-    if (slavehelper.process())
+    /*if (slavehelper.process())
     {
         vector<string> name = {"DummyData129999","DummyData129998","DummyData998","DummyData129995","DummyData129928","DummyData119998","DummyData998"};
         cout << "Msg resp done, setup the database" << endl;
@@ -31,7 +36,7 @@ int main() {
 
         //ce.Name = "new3";
         //res = res & DatabaseServer::getInstance()->deleteElemental(ce);
-    }
+    }*/
     uint64_t endTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
     cout << "Program execution time: " << endTime - startTime <<"ms"<<endl;
     return 0;

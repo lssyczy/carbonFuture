@@ -33,8 +33,20 @@ bool SlaveHelper::process()
     std::cout << "SlaveProcessWorker: " << message.mtext <<" sent"<< std::endl;
 
     msgctl(msqid_, IPC_RMID, NULL);
-    
+
     return true;
+}
+
+void SlaveHelper::cementMessageReceiver(std::string& materialStr, std::string& comStr)
+{
+    Message message;
+
+    msgrcv(msqid_, &message, sizeof(message.mtext), CarbonFeatureMessage::Material, 0);
+    materialStr = message.mtext;
+
+    msgrcv(msqid_, &message, sizeof(message.mtext), CarbonFeatureMessage::Com, 0);
+    comStr = message.mtext;
+
 }
 
 void SlaveHelper::generateDummyData(unsigned int testLoop)

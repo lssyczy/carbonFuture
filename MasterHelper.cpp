@@ -4,6 +4,8 @@
 
 #include <map>
 #include <vector>
+#include <chrono>
+#include <thread>
 
 using namespace std;
 
@@ -19,7 +21,7 @@ MasterHelper::~MasterHelper()
 {
 }
 
-bool MasterHelper::operationProceed()
+bool MasterHelper::operationProceed(string& materialStr, string& comStr)
 {
     cout << "Please input your request with below operation type: ";
     for (auto &m : cfMsgToStr)
@@ -52,22 +54,16 @@ bool MasterHelper::operationProceed()
         exit(-1);
     }
 
-    Message message;
-    message.mtype = 1;
-    strcpy(message.mtext, operation.data());
+    //TODO: Need to check if cement is a supported algorithm.
+    getCementElement(materialStr,comStr);
 
-    msgsnd(msqid_, &message, sizeof(message.mtext), 0);
-    cout << "MasterProcessWoker: " << message.mtext << " sent, prepare to receiving..." << endl;
-
-    msgrcv(msqid_, &message, sizeof(message.mtext), 1, 0);
-    cout << "MasterProcessWoker: " << message.mtext << " received, done." << endl;
-
-    msgctl(msqid_, IPC_RMID, NULL);
+    //cementMessageSender(matcom.first,matcom.second);
+    //cementMessageSender("Limestone","32.5RM");
 
     return true;
 }
 
-void MasterHelper::cementImp()
+void MasterHelper::getCementElement(string& materialStr, string& comStr)
 {
     pair<string,string> ret;
     cout << "Please input Material: ";
@@ -87,13 +83,72 @@ void MasterHelper::cementImp()
 
     if (isMaterialValid)
     {
-        cout << "cement element available!" << endl;
+        cout << "Material available!" << endl;
+        materialStr = material;
     }else
     {
-        cout << "cement element not available!" << endl;
+        cout << "Material not available!" << endl;
         exit(-1);
     }
 
+    cout << "Please input comStr: ";
+    for (auto& c: comStrVec)
+        cout << c << "/";
+    cout << endl;
+    cin >> com;
 
-    //return {};
+    for (auto& c: comStrVec)
+    {
+        if (!c.compare(com))
+        {
+            iscomStrValid = true;
+            break;
+        }
+    }
+
+    if (iscomStrValid)
+    {
+        cout << "com available!" << endl;
+        comStr = com;
+    }else
+    {
+        cout << "com not available!" << endl;
+        exit(-1);
+    }
+}
+
+void MasterHelper::cementMessageSender(const string materialStr, const string comStr)
+{
+    Message message;
+
+    cementFactor cementfactor;
+    cementfactor.first = materialStr;
+    cementfactor.second = comStr;
+
+    message.mtype = CarbonFeatureMessage::Material;
+    strcpy(message.mtext, cementfactor.first.data());
+    cout << "message.mtext: " << message.mtext << endl;
+    msgsnd(msqid_, &message, sizeof(message.mtext), IPC_NOWAIT);
+
+
+    message.mtype = CarbonFeatureMessage::Com;
+    strcpy(message.mtext, cementfactor.second.data());
+    cout << "message.mtext: " << message.mtext << endl;
+    msgsnd(msqid_, &message, sizeof(message.mtext), IPC_NOWAIT);
+
+    this_thread::sleep_for(chrono::seconds(1));
+    msgctl(msqid_, IPC_RMID, NULL);
+    cout << "delete message queue"<< endl;
+    /*msgrcv(msqid_, &message, sizeof(message.mtext), CarbonFeatureMessage::MaterialResp, 0);
+    auto matResp = message.mtext;
+    msgrcv(msqid_, &message, sizeof(message.mtext), CarbonFeatureMessage::ComResp, 0);
+    auto comResp = message.mtext;
+    cout << "matResp: "<< matResp << "; comResp: " << comResp << endl;
+    if (matResp == "MaterialResp" && comResp == "ComResp")
+    {
+        msgctl(msqid_, IPC_RMID, NULL);
+        cout << "delete message queue"<< endl;
+    }*/
+
+
 }

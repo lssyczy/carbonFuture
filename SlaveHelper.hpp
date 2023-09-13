@@ -11,6 +11,7 @@ public:
     ~SlaveHelper();
 
     bool process();
+    void cementMessageReceiver(std::string& materialStr, std::string& comStr);
     void generateDummyData(unsigned int testLoop);
 private:
     int msqid_;
