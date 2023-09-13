@@ -1,8 +1,9 @@
+#include "../include/Messages.hpp"
+
 #include <vector>
 #include <cstring>
 #include <mysql/mysql.h>
 #include <iostream>
-
 //test purpose files
 #include <sstream>
 #include<stdlib.h> 
@@ -12,6 +13,15 @@
 using namespace std;
 
 //placeholder: this part should be clarified later
+typedef struct cementElemental {
+    unsigned int Index;
+    string comStr;
+    string Material;
+    string Type;
+    long double Quantity;
+    long double CarbonEmission;
+} cementElemental;
+
 typedef struct carbonElemental {
     unsigned int Index;
     string Name;
@@ -36,9 +46,11 @@ public:
     bool deleteElemental(const carbonElemental ce);
     bool updateElemental(/*const carbonElemental ce*/);
     vector<carbonElemental> getElementals(vector<string> nameVec);
+    vector<cementElemental> getCementElementals(cementFactor cement_factor);
 
 private:
     string buildSql(vector<string> nameVec);
+    string buildCementSql(cementFactor cement_factor);
     const char* host = "192.168.50.85";
     const char* user = "visitor";
     const char* passwd = "12345678";
@@ -46,5 +58,6 @@ private:
     const int port = 3306;
     MYSQL* con;
     vector<carbonElemental> ceVec;
+    vector<cementElemental> cementVec;
     vector<string> nameVec;
 };

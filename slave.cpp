@@ -12,6 +12,22 @@ int main() {
 
     slavehelper.cementMessageReceiver(materialStr,comStr);
     cout << "slave_main: materialStr: " <<materialStr<< "; comStr: "<< comStr << endl;
+    cementFactor cementfactor;
+    cementfactor.first = materialStr;
+    cementfactor.second = comStr;
+    vector<cementElemental> cementVec = DatabaseServer::getInstance()->getCementElementals(cementfactor);
+
+    for (auto& cementvec: cementVec)
+    {
+        cout<< "Index: "<< cementvec.Index 
+        << "\t comStr: " << cementvec.comStr
+        << "\t Material: " <<cementvec.Material
+        << "\t Type: " << cementvec.Type
+        << "\t Quantity: " << cementvec.Quantity
+        << "\t CarbonEmission: " << cementvec.CarbonEmission
+        << endl; 
+        cout << "------------------------------------------------------------------------------------------"<<endl;
+    }
     
     /*if (slavehelper.process())
     {
