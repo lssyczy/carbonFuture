@@ -1,0 +1,9 @@
+"filename", "language", "C++", "comment", "blank", "total"
+"f:\MyCode\carbonFuture\MasterHelper.cpp", "C++", 30, -13, 6, 23
+"f:\MyCode\carbonFuture\MasterHelper.hpp", "C++", 3, 0, 1, 4
+"f:\MyCode\carbonFuture\SlaveHelper.cpp", "C++", 17, 2, 4, 23
+"f:\MyCode\carbonFuture\SlaveHelper.hpp", "C++", 2, 0, 0, 2
+"f:\MyCode\carbonFuture\include\Messages.hpp", "C++", 16, 0, 2, 18
+"f:\MyCode\carbonFuture\master.cpp", "C++", 8, 0, 0, 8
+"f:\MyCode\carbonFuture\slave.cpp", "C++", 3, 0, 1, 4
+"Total", "-", 79, -11, 14, 82

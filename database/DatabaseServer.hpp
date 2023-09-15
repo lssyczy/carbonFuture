@@ -46,11 +46,13 @@ public:
     bool deleteElemental(const carbonElemental ce);
     bool updateElemental(/*const carbonElemental ce*/);
     vector<carbonElemental> getElementals(vector<string> nameVec);
-    vector<cementElemental> getCementElementals(cementFactor cement_factor);
+    vector<cementElemental> getCementOneshotElementals(cementOneshotFactor cement_factor);
+    vector<cementElemental> getCementOverallElementals(string comStr);
 
 private:
     string buildSql(vector<string> nameVec);
-    string buildCementSql(cementFactor cement_factor);
+    string buildCementOneshotSql(cementOneshotFactor cement_factor);
+    string buildCementOverallSql(string comStr);
     const char* host = "192.168.50.85";
     const char* user = "visitor";
     const char* passwd = "12345678";

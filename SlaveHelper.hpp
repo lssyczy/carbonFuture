@@ -11,10 +11,13 @@ public:
     ~SlaveHelper();
 
     bool process();
-    void cementMessageReceiver(std::string& materialStr, std::string& comStr);
+    void cementOneshotReceiver(std::string& materialStr, std::string& comStr);
+    void cementOverallReceiver(long double& quantity, std::string& comStr);
     void generateDummyData(unsigned int testLoop);
+    void operationReceiver(std::string& opsRec);
 private:
     int msqid_;
+    bool isOpsReceived;
 
 
 };

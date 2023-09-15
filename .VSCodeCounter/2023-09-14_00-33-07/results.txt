@@ -1,0 +1,39 @@
+Date : 2023-09-14 00:33:07
+Directory : f:\MyCode\carbonFuture
+Total : 12 files,  501 codes, 43 comments, 116 blanks, all 660 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| C++      |         12 |        501 |         43 |        116 |        660 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++----------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                               | files      | code       | comment    | blank      | total      |
++----------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                  |         12 |        501 |         43 |        116 |        660 |
+| . (Files)                                          |          8 |        281 |         40 |         75 |        396 |
+| database                                           |          2 |        177 |          3 |         30 |        210 |
+| include                                            |          2 |         43 |          0 |         11 |         54 |
++----------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++----------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                           | language | code       | comment    | blank      | total      |
++----------------------------------------------------+----------+------------+------------+------------+------------+
+| f:\MyCode\carbonFuture\MasterHelper.cpp            | C++      |        116 |         13 |         25 |        154 |
+| f:\MyCode\carbonFuture\MasterHelper.hpp            | C++      |         23 |          1 |          6 |         30 |
+| f:\MyCode\carbonFuture\SlaveHelper.cpp             | C++      |         52 |          2 |         17 |         71 |
+| f:\MyCode\carbonFuture\SlaveHelper.hpp             | C++      |         15 |          0 |          6 |         21 |
+| f:\MyCode\carbonFuture\commonHelper.cpp            | C++      |         13 |          0 |          4 |         17 |
+| f:\MyCode\carbonFuture\commonHelper.hpp            | C++      |         15 |          0 |          4 |         19 |
+| f:\MyCode\carbonFuture\database\DatabaseServer.cpp | C++      |        124 |          1 |         21 |        146 |
+| f:\MyCode\carbonFuture\database\DatabaseServer.hpp | C++      |         53 |          2 |          9 |         64 |
+| f:\MyCode\carbonFuture\include\Messages.hpp        | C++      |         27 |          0 |          7 |         34 |
+| f:\MyCode\carbonFuture\include\TableStruct.hpp     | C++      |         16 |          0 |          4 |         20 |
+| f:\MyCode\carbonFuture\master.cpp                  | C++      |         18 |          0 |          6 |         24 |
+| f:\MyCode\carbonFuture\slave.cpp                   | C++      |         29 |         24 |          7 |         60 |
+| Total                                              |          |        501 |         43 |        116 |        660 |
++----------------------------------------------------+----------+------------+------------+------------+------------+

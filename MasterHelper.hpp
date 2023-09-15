@@ -13,10 +13,14 @@ public:
     MasterHelper(std::string msg, int msgId);
     ~MasterHelper();
 
-    bool operationProceed(string& materialStr, string& comStr);
+    operationType getOperationType();
     //need to return pair string
-    void getCementElement(string& materialStr, string& comStr);
-    void cementMessageSender(const string materialStr, const string comStr);
+    void getCementElement(operationType ops, string& materialStr, string& comStr, long double& quantity);
+    void cementOneshotSender(const string materialStr, const string comStr);
+    void cementOverallSender(const long double quantity, const string comStr);
+    void operationSender(const CarbonFeatureMessage opsSend);
+    void deleteMsgQueue();
+
 
 private:
     int msqid_;
@@ -25,5 +29,6 @@ private:
     std::string com;
     bool isMaterialValid;
     bool iscomStrValid;
+    bool isOpsValid;
     std::pair<string,string> pairMaterialCom;
 };

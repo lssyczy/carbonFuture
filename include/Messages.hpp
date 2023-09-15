@@ -4,7 +4,8 @@
 #include <cstring>
 
 
-using cementFactor = std::pair<std::string,std::string>;
+using cementOneshotFactor = std::pair<std::string,std::string>;
+using cementOverallFactor = std::pair<long double,std::string>;
 
 struct Message {
     long mtype; 
@@ -20,8 +21,18 @@ typedef enum CarbonFeatureMessage {
     Material,
     MaterialResp,
     Com,
-    ComResp
+    ComResp,
+    Quantity,
+    QuantityResp,
+    OpsOneshot,
+    OpsOverall,
+    OpsGeneral
 }CarbonFeatureMessage;
+
+typedef enum operationType {
+    oneshot,
+    overall
+}operationType;
 
 static std::map<CarbonFeatureMessage, std::string> cfMsgToStr =
     {{CarbonFeatureMessage::Req, "Req"},
@@ -31,4 +42,13 @@ static std::map<CarbonFeatureMessage, std::string> cfMsgToStr =
      {CarbonFeatureMessage::Material, "Material"},
      {CarbonFeatureMessage::MaterialResp, "MaterialResp"},
      {CarbonFeatureMessage::Com, "Com"},
-     {CarbonFeatureMessage::ComResp, "ComResp"},};
+     {CarbonFeatureMessage::ComResp, "ComResp"},
+     {CarbonFeatureMessage::Quantity, "Quantity"},
+     {CarbonFeatureMessage::QuantityResp, "QuantityResp"},
+     {CarbonFeatureMessage::OpsOneshot, "OpsOneshot"},
+     {CarbonFeatureMessage::OpsOverall, "OpsOverall"},
+     {CarbonFeatureMessage::OpsGeneral, "OpsGeneral"}};
+
+static std::map<operationType, std::string> operationStr =
+    {{operationType::oneshot, "oneshot"},
+     {operationType::overall, "overall"}};

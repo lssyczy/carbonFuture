@@ -85,10 +85,10 @@ vector<carbonElemental> DatabaseServer::getElementals(vector<string> nameVec)
     return ceVec;
 }
 
-vector<cementElemental> DatabaseServer::getCementElementals(cementFactor cement_factor)
+vector<cementElemental> DatabaseServer::getCementOneshotElementals(cementOneshotFactor cement_factor)
 {
     char sql[1024];
-    auto sqlCmd = buildCementSql(cement_factor);
+    auto sqlCmd = buildCementOneshotSql(cement_factor);
 
     sprintf(sql, "%s", sqlCmd.c_str());
     if (mysql_query(con,sql))
@@ -113,13 +113,51 @@ vector<cementElemental> DatabaseServer::getCementElementals(cementFactor cement_
     return cementVec;
 }
 
-string DatabaseServer::buildCementSql(cementFactor cement_factor)
+vector<cementElemental> DatabaseServer::getCementOverallElementals(std::string comStr)
+{
+    char sql[1024];
+    auto sqlCmd = buildCementOverallSql(comStr);
+
+    sprintf(sql, "%s", sqlCmd.c_str());
+    if (mysql_query(con,sql))
+    {
+        cout << "Failed to get data, Error: " << mysql_error(con) << endl;
+        return {};
+    }
+
+    MYSQL_RES* res = mysql_store_result(con);
+    MYSQL_ROW row;
+    while((row = mysql_fetch_row(res)))
+    {
+        cementElemental ce;
+        ce.Index = atoi(row[0]);
+        ce.comStr = row[1];
+        ce.Material = row[2];
+        ce.Type = row[3];
+        ce.Quantity = atof(row[4]);
+        ce.CarbonEmission = atof(row[5]);
+        cementVec.emplace_back(ce);
+    }
+    return cementVec;
+}
+
+string DatabaseServer::buildCementOverallSql(std::string comStr)
+{
+    string sqlCmdTmp = "select * from cementTab where comStr = '";
+    string sqlCmd = "";
+    
+    sqlCmd += sqlCmdTmp + comStr + "';";
+    //cout << "sqlCmd: " << sqlCmd << endl;
+    return sqlCmd;
+}
+
+string DatabaseServer::buildCementOneshotSql(cementOneshotFactor cement_factor)
 {
     string sqlCmdTmp = "select * from cementTab where Material = '";
     string sqlCmd = "";
     
     sqlCmd += sqlCmdTmp + cement_factor.first.c_str() + "'" + " AND comStr = '" + cement_factor.second.c_str() + "';";
-    cout << "sqlCmd: " << sqlCmd << endl;
+    //cout << "sqlCmd: " << sqlCmd << endl;
     return sqlCmd;
 }
 

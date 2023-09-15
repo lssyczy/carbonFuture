@@ -10,6 +10,7 @@ SlaveHelper::SlaveHelper(std::string msg, int msgId)
 {
     commonHelper commonhelper(msg, msgId);
     msqid_ = commonhelper.getMsqid();
+    isOpsReceived = false;
 }
 
 SlaveHelper::~SlaveHelper()
@@ -37,16 +38,56 @@ bool SlaveHelper::process()
     return true;
 }
 
-void SlaveHelper::cementMessageReceiver(std::string& materialStr, std::string& comStr)
+void SlaveHelper::cementOneshotReceiver(std::string& materialStr, std::string& comStr)
 {
     Message message;
+    bool isMatRec = false;
+    bool isComRec= false;
+    cout << "cementOneshotReceiver: waiting for user select material and com" << endl;
+    while(!isMatRec)
+    {
+        msgrcv(msqid_, &message, sizeof(message.mtext), CarbonFeatureMessage::Material, 0);
+        if (message.mtext != '\0');
+        {
+            materialStr = message.mtext;
+            isMatRec = true;
+        }
+    }
+    while(!isComRec)
+    {
+        msgrcv(msqid_, &message, sizeof(message.mtext), CarbonFeatureMessage::Com, 0);
+        if (message.mtext != '\0');
+        {
+            comStr = message.mtext;
+            isComRec = true;
+        }
+    }
+}
 
-    msgrcv(msqid_, &message, sizeof(message.mtext), CarbonFeatureMessage::Material, 0);
-    materialStr = message.mtext;
-
-    msgrcv(msqid_, &message, sizeof(message.mtext), CarbonFeatureMessage::Com, 0);
-    comStr = message.mtext;
-
+void SlaveHelper::cementOverallReceiver(long double& quantity, std::string& comStr)
+{
+    Message message;
+    bool isQuantityRec = false;
+    bool isComRec= false;
+    cout << "cementOverallReceiver: waiting for user select quantity and com" << endl;
+    while(!isQuantityRec)
+    {
+        msgrcv(msqid_, &message, sizeof(message.mtext), CarbonFeatureMessage::Quantity, 0);
+        if (message.mtext != '\0');
+        {
+            quantity = atof(message.mtext);
+            isQuantityRec = true;
+        }
+    }
+    while(!isComRec)
+    {
+        msgrcv(msqid_, &message, sizeof(message.mtext), CarbonFeatureMessage::Com, 0);
+        if (message.mtext != '\0');
+        {
+            comStr = message.mtext;
+            isComRec = true;
+        }
+    }
 }
 
 void SlaveHelper::generateDummyData(unsigned int testLoop)
@@ -67,4 +108,17 @@ void SlaveHelper::generateDummyData(unsigned int testLoop)
         DatabaseServer::getInstance()->insertElemental(ce);
         cout<<"counter: "<<i<<endl;
         }
+}
+
+void SlaveHelper::operationReceiver(std::string& opsRec)
+{
+    Message message;
+
+    cout << "operationReceiver: waiting for user select ops" << endl;
+    msgrcv(msqid_, &message, sizeof(message.mtext), CarbonFeatureMessage::OpsGeneral, 0);
+    //cout << "message.mtext1:" << message.mtext << endl;
+
+    //this_thread::sleep_for(chrono::seconds(1));
+    opsRec = message.mtext;
+
 }

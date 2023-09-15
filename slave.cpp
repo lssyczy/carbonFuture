@@ -7,26 +7,64 @@ int main() {
 
     uint64_t startTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
     SlaveHelper slavehelper("CF_message", 1);
-    std::string materialStr = "";
-    std::string comStr = "";;
 
-    slavehelper.cementMessageReceiver(materialStr,comStr);
-    cout << "slave_main: materialStr: " <<materialStr<< "; comStr: "<< comStr << endl;
-    cementFactor cementfactor;
-    cementfactor.first = materialStr;
-    cementfactor.second = comStr;
-    vector<cementElemental> cementVec = DatabaseServer::getInstance()->getCementElementals(cementfactor);
+    std::string ops;
+    slavehelper.operationReceiver(ops);
+    //cout << "ops: " << ops << endl;
 
-    for (auto& cementvec: cementVec)
+    if (ops == "OpsOneshot")
     {
-        cout<< "Index: "<< cementvec.Index 
-        << "\t comStr: " << cementvec.comStr
-        << "\t Material: " <<cementvec.Material
-        << "\t Type: " << cementvec.Type
-        << "\t Quantity: " << cementvec.Quantity
-        << "\t CarbonEmission: " << cementvec.CarbonEmission
-        << endl; 
-        cout << "------------------------------------------------------------------------------------------"<<endl;
+        std::string materialStr = "";
+        std::string comStr = "";
+
+        slavehelper.cementOneshotReceiver(materialStr,comStr);
+        cout << "OpsOneshot: materialStr: " <<materialStr<< "; comStr: "<< comStr << endl;
+        cementOneshotFactor oneshotfactor;
+        oneshotfactor.first = materialStr;
+        oneshotfactor.second = comStr;
+        vector<cementElemental> cementVec = DatabaseServer::getInstance()->getCementOneshotElementals(oneshotfactor);
+
+        for (auto& cementvec: cementVec)
+        {
+            cout << "****************************************" << endl;
+            cout<< "Index: "<< cementvec.Index << "\n"
+            << "comStr: " << cementvec.comStr << "\n"
+            << "Material: " <<cementvec.Material << "\n"
+            << "Type: " << cementvec.Type << "\n"
+            << "Quantity: " << cementvec.Quantity << "\n"
+            << "CarbonEmission: " << cementvec.CarbonEmission << endl; 
+            cout << "****************************************" << endl;
+        }
+    } else if (ops == "OpsOverall") 
+    {
+        long double quantity = 0;
+        long double carbonEmissionSum = 0;
+        long double singleMaterialEmssion = 0;
+        std::string comStr = "";
+
+        slavehelper.cementOverallReceiver(quantity, comStr);
+        cout << "OpsOverall: quantity: " << quantity << " and comStr: " << comStr << endl;
+        vector<cementElemental> cementVec = DatabaseServer::getInstance()->getCementOverallElementals(comStr);
+
+        for (auto& cementvec: cementVec)
+        {
+            /*cout << "****************************************" << endl;
+            cout<< "Index: "<< cementvec.Index << "\n"
+            << "comStr: " << cementvec.comStr << "\n"
+            << "Material: " <<cementvec.Material << "\n"
+            << "Type: " << cementvec.Type << "\n"
+            << "Quantity: " << cementvec.Quantity << "\n"
+            << "CarbonEmission: " << cementvec.CarbonEmission << endl; 
+            cout << "****************************************" << endl;*/
+            singleMaterialEmssion = cementvec.Quantity * cementvec.CarbonEmission;
+            carbonEmissionSum += singleMaterialEmssion;
+        }
+        cout << "****************************************" << endl;
+        cout << "sum of "<< comStr << " carbon emission with quantity: " << quantity << " is: " << carbonEmissionSum*quantity << endl;
+        cout << "****************************************" << endl;
+    } else
+    {
+        cout << "Not a supported operation" << endl;
     }
     
     /*if (slavehelper.process())

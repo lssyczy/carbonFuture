@@ -4,20 +4,31 @@ using namespace std;
 
 int main() {
     MasterHelper masterhelper("CF_message", 1);
+
+    auto ops = masterhelper.getOperationType();
     string material = "";
     string com = "";
-    if (masterhelper.operationProceed(material, com))
+    long double quantity = 0;
+    if (ops == operationType::oneshot)
+    { 
+        masterhelper.operationSender(CarbonFeatureMessage::OpsOneshot);
+        masterhelper.getCementElement(ops,material,com,quantity);
+        masterhelper.cementOneshotSender(material,com);
+    }
+    else if (ops == operationType::overall)
     {
-        masterhelper.cementMessageSender(material,com);
-        cout << "material: " << material << "; com: "<< com<< endl;
-        cout << "Operation selection done" << endl;
+        masterhelper.operationSender(CarbonFeatureMessage::OpsOverall);
+        masterhelper.getCementElement(ops,material,com,quantity);
+        masterhelper.cementOverallSender(quantity,com);
     }
     else
     {
-        cout << "Msg send/receive fail" << endl;
         return -1;
     }
 
+    masterhelper.deleteMsgQueue();
+    cout << "delete message queue"<< endl;
 
+    return 0;
 }
 

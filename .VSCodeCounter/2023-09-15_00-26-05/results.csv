@@ -1,0 +1,14 @@
+"filename", "language", "C++", "comment", "blank", "total"
+"f:\MyCode\carbonFuture\MasterHelper.cpp", "C++", 146, 0, 31, 177
+"f:\MyCode\carbonFuture\MasterHelper.hpp", "C++", 26, 1, 7, 34
+"f:\MyCode\carbonFuture\SlaveHelper.cpp", "C++", 69, 4, 21, 94
+"f:\MyCode\carbonFuture\SlaveHelper.hpp", "C++", 17, 0, 6, 23
+"f:\MyCode\carbonFuture\commonHelper.cpp", "C++", 13, 0, 4, 17
+"f:\MyCode\carbonFuture\commonHelper.hpp", "C++", 15, 0, 4, 19
+"f:\MyCode\carbonFuture\database\DatabaseServer.cpp", "C++", 124, 1, 21, 146
+"f:\MyCode\carbonFuture\database\DatabaseServer.hpp", "C++", 53, 2, 9, 64
+"f:\MyCode\carbonFuture\include\Messages.hpp", "C++", 43, 0, 9, 52
+"f:\MyCode\carbonFuture\include\TableStruct.hpp", "C++", 16, 0, 4, 20
+"f:\MyCode\carbonFuture\master.cpp", "C++", 26, 0, 6, 32
+"f:\MyCode\carbonFuture\slave.cpp", "C++", 32, 24, 8, 64
+"Total", "-", 580, 32, 130, 742
