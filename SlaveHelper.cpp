@@ -5,6 +5,7 @@
 #include <map>
 #include <chrono>
 #include <thread>
+#include <cerrno>
 
 SlaveHelper::SlaveHelper(std::string msg, int msgId)
 {
@@ -110,15 +111,12 @@ void SlaveHelper::generateDummyData(unsigned int testLoop)
         }
 }
 
-void SlaveHelper::operationReceiver(std::string& opsRec)
+void SlaveHelper::operationReceiver(Message& message, std::string& opsRec)
 {
-    Message message;
-
-    cout << "operationReceiver: waiting for user select ops" << endl;
-    msgrcv(msqid_, &message, sizeof(message.mtext), CarbonFeatureMessage::OpsGeneral, 0);
-    //cout << "message.mtext1:" << message.mtext << endl;
-
-    //this_thread::sleep_for(chrono::seconds(1));
+    //cout << "operationReceiver: waiting for user select ops" << endl;
+    int ret = msgrcv(msqid_, &message, MAX_MESSAGE_SIZE, CarbonFeatureMessage::OpsGeneral, 0);
+    if (ret == -1)
+        cout << "Error: " << strerror(errno) << std::endl;
     opsRec = message.mtext;
-
+    //cout << "opsRec: " << opsRec << std::endl;
 }

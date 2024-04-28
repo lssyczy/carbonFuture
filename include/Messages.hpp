@@ -7,9 +7,11 @@
 using cementOneshotFactor = std::pair<std::string,std::string>;
 using cementOverallFactor = std::pair<long double,std::string>;
 
+#define MAX_MESSAGE_SIZE 1024
+
 struct Message {
     long mtype; 
-    char mtext[1024];
+    char mtext[MAX_MESSAGE_SIZE];
 };
 
 

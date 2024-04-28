@@ -25,7 +25,7 @@ MasterHelper::~MasterHelper()
 
 void MasterHelper::deleteMsgQueue()
 {
-    msgctl(msqid_, IPC_RMID, NULL);
+    //msgctl(msqid_, IPC_RMID, NULL);
 }
 
 operationType MasterHelper::getOperationType()
@@ -118,7 +118,7 @@ void MasterHelper::getCementElement(operationType ops, string& materialStr, stri
 
 void MasterHelper::cementOneshotSender(const string materialStr, const string comStr)
 {
-    Message message;
+   /**/ Message message;
 
     cementOneshotFactor oneshotfactor;
     oneshotfactor.first = materialStr;
